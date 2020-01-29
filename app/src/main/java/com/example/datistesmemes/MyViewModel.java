@@ -13,7 +13,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 
 public class MyViewModel extends ViewModel {
@@ -31,21 +30,26 @@ public class MyViewModel extends ViewModel {
 
     private void loadMeme() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.imgflip.com/get_memes")
+                .baseUrl("https://api.imgflip.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        Log.d("T", "AHHHHH");
         ImgflipService service = retrofit.create(ImgflipService.class);
-        Call<List<Meme>> meme = service.listMeme();
-        meme.enqueue(new Callback<List<Meme>>() {
+        Call<ApiResponse> meme = service.listMeme();
+
+        meme.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<List<Meme>> memes, Response<List<Meme>> response) {
+            public void onResponse(Call<ApiResponse> memes, Response<ApiResponse> response) {
+                Log.d("T", "yui");
                 Log.d("T", response.message());
+                memeListMutable.setValue(response.body().data.memes);
             }
 
             @Override
-            public void onFailure(Call<List<Meme>> memeList, Throwable t) {
-
+            public void onFailure(Call<ApiResponse> memeList, Throwable t) {
+                Log.d("T", "onFailure");
             }
         });
+
     }
 }

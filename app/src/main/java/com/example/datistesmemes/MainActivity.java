@@ -3,13 +3,14 @@ package com.example.datistesmemes;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.List;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,17 +19,26 @@ public class MainActivity extends AppCompatActivity {
 
         MyViewModel model = ViewModelProviders.of(this).get(MyViewModel.class);
 
-        model.getMemeList().observe(this, new Observer<List<Meme>>() {
-            @Override
-            public void onChanged(List<Meme> memes) {
-                Log.d("C", "Changed");
+        recyclerView = findViewById(R.id.my_recycler_view);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        model.getMemeList().observe(this, memes -> {
+            Log.d("C", "Changed");
+            for(Meme m : memes) {
+                Log.d("M", m.name);
             }
+
+            // specify an adapter (see also next example)
+
+            recyclerView.setAdapter(new MyAdapter(memes));
         });
 
-        /*TextView t = findViewById(R.id.lbl);
-        t.setText(str);*/
 
 
     }
+
 }
 
