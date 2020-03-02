@@ -25,13 +25,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         model.getMemeList().observe(this, memes -> {
-            Log.d("C", "Changed");
-            for(Meme m : memes) {
-                Log.d("M", m.name);
-            }
-
-            // specify an adapter (see also next example)
-
             recyclerView.setAdapter(new MyAdapter(memes));
         });
     }

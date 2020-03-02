@@ -36,24 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 bundle.putString("name", name);
                 bundle.putString("url", url);
 
-                Log.d("T", "AAH");
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                Bitmap bitmap = drawable.getBitmap();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-
-                Log.d("T", "BBH");
-
-                byte[] b = baos.toByteArray();
-
-                // bundle.putByteArray("img", b);
-
-                Log.d("T", "CCH " + b.length);
-
                 intent.putExtras(bundle);
-
-                Log.d("T", "DDH");
 
                 view.getContext().startActivity(intent);
             });

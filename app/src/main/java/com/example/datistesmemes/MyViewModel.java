@@ -40,8 +40,6 @@ public class MyViewModel extends ViewModel {
         meme.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> memes, Response<ApiResponse> response) {
-                Log.d("T", "yui");
-                Log.d("T", response.message());
                 memeListMutable.setValue(response.body().data.memes);
             }
 
