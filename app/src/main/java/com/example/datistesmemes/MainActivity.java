@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
         model.getMemeList().observe(this, memes -> {
             Log.d("C", "Changed");
             for(Meme m : memes) {
@@ -35,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
             recyclerView.setAdapter(new MyAdapter(memes));
         });
-
-
-
     }
-
 }
 

@@ -1,11 +1,19 @@
 package com.example.datistesmemes;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +23,40 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
+        public String name;
+        public String url;
         public ImageView imageView;
-        public MyViewHolder(TextView t, ImageView v) {
+
+        public MyViewHolder(ImageView v) {
             super(v);
-            textView = t;
             imageView = v;
+            imageView.setOnClickListener(view -> {
+                Intent intent = new Intent(view.getContext(), Main2Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("url", url);
+
+                Log.d("T", "AAH");
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+                Log.d("T", "BBH");
+
+                byte[] b = baos.toByteArray();
+
+                // bundle.putByteArray("img", b);
+
+                Log.d("T", "CCH " + b.length);
+
+                intent.putExtras(bundle);
+
+                Log.d("T", "DDH");
+
+                view.getContext().startActivity(intent);
+            });
         }
     }
 
@@ -37,7 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         TextView t = new TextView(parent.getContext());
 
         v.setPadding(10,10,10,10);
-        MyViewHolder vh = new MyViewHolder(t,v);
+        MyViewHolder vh = new MyViewHolder(v);
 
         return vh;
     }
@@ -47,7 +83,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(memes.get(position).url);
+        // holder.textView.setText(memes.get(position).url);
+        holder.name = memes.get(position).name;
+        holder.url = memes.get(position).url;
         Picasso.get().load(memes.get(position).url).into(holder.imageView);
     }
 

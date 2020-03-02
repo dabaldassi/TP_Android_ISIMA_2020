@@ -10,7 +10,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         // implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
         // implementation "androidx.lifecycle:lifecycle-viewmodel:2.1.0"
         
